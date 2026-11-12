@@ -1,9 +1,9 @@
-/*! redline v1.0.0 | track-changes card for Claude chat | MIT */
+/*! redline v1.0.1 | track-changes card for Claude chat | MIT */
 (function () {
   'use strict';
   if (window.Redline && window.Redline.version) { window.Redline.auto(); return; }
 
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
   var ORDER = ['sub', 'add', 'del', 'punct', 'move', 'note'];
   var KIND = { sub: 'Changed', add: 'Added', del: 'Removed', punct: 'Punctuation', move: 'Moved', note: 'Note' };
   var TAGS = {
@@ -280,8 +280,7 @@
     '.rl-key b{font-weight:400;color:var(--rl-fg3);font-variant-numeric:tabular-nums}',
     '.rl-hint{margin-left:auto;color:var(--rl-fg3)}',
     /* popover */
-    '.rl-pop{position:absolute;z-index:5;left:0;top:0;width:max-content;max-width:min(330px,calc(100% - 16px));background:var(--rl-s2);border:.5px solid var(--rl-bd2);border-radius:10px;padding:9px 10px 10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.06);font-size:14px;line-height:1.5;color:var(--rl-fg);opacity:0;transform:translateY(-2px);transition:opacity .1s ease-out,transform .1s ease-out;pointer-events:none}',
-    '.rl-pop.is-on{opacity:1;transform:none;pointer-events:auto}',
+    '.rl-pop{position:absolute;z-index:5;left:0;top:0;width:max-content;max-width:min(330px,calc(100% - 16px));background:var(--rl-s2);border:.5px solid var(--rl-bd2);border-radius:10px;padding:9px 10px 10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.06);font-size:14px;line-height:1.5;color:var(--rl-fg);pointer-events:auto}',
     '.rl-pop[hidden]{display:none}',
     '.rl-ph{display:flex;align-items:center;gap:8px;min-height:26px}',
     '.rl-nav{margin-left:auto;display:inline-flex;align-items:center;gap:0;padding-left:8px}',
