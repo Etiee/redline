@@ -19,16 +19,33 @@ Keep the writer's voice and style. Make the smallest edit that fixes a real prob
 
 ## Output
 
-1. Call the inline widget tool (`show_widget`; `mcp__visualize__show_widget` in Claude Code). If it requires a `read_me` call first, make that call once with `modules: ["interactive"]`. Use `title: "redline_review"`, `loading_messages: ["Marking up your text"]`, and this `widget_code`, with nothing else added:
+**Step 1: check for the card tool before writing anything.** Look through the tools you actually have for one named `show_widget` or ending in `show_widget` (for example `visualize:show_widget` or `mcp__visualize__show_widget`). Don't assume it's there. If it isn't in your tool list, go to "No card tool" below.
+
+**Step 2: draw the card.** Your first output must be the tool call itself, not a written review. If the tool asks for a `read_me` call first, make it once with `modules: ["interactive"]`. Then call `show_widget` with `title: "redline_review"`, `loading_messages: ["Marking up your text"]`, and this `widget_code`, adding nothing else:
 
 ```html
 <script type="text/redline">MARKED TEXT</script>
 <script src="https://cdn.jsdelivr.net/gh/Etiee/redline@1/redline.min.js" onerror="var s=document.querySelector('script[type$=redline]'),p=document.createElement('pre');p.style.whiteSpace='pre-wrap';p.textContent=s.textContent;s.after(p)"></script>
 ```
 
-2. After the widget, write at most two short sentences: the most important issue, plus anything you couldn't verify. Don't list the changes again.
+**Step 3: after the call returns,** write at most two short sentences: the most important issue, plus anything you couldn't verify. Don't list the changes again. Never say the card is shown unless the tool call actually ran and returned without an error.
 
-If no widget tool is available, put the marked text in a `text` code block and say the card needs inline visuals turned on.
+### No card tool
+
+Don't print the marked text or any `{++ ++}` markup. Start with this line: "Inline visuals aren't on in this chat, so here's the list version." Then give a numbered list in document order, one item per change:
+
+```
+1. **Changed · Fact**: …of Westphalia, signed in ~~1658~~ **1648**, is often seen…
+   It was signed in 1648.
+2. **Added · Gap**: …new forms of sovereignty. **This matters because later writers…**
+   The question asks how it shaped the system.
+3. **Moved · Flow**: "Many scholars, however, argue…" from after "…own state's religion." to after "…new forms of sovereignty."
+   Reads better as a turn after your main claims.
+4. **Note · Citation**: …international politics (Krasner, 1999).
+   Krasner argues the opposite. Check this source.
+```
+
+In each item, quote up to four words of the original on each side so the writer can search for the spot. Show removed text as `~~old~~` and new text as `**new**`. For punctuation, name the mark in words too (for example "remove the comma after *that*"). End with the same two sentences as Step 3.
 
 ## Marked text
 
