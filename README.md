@@ -14,8 +14,9 @@ Hover or tap any change to see why it's suggested.
 ## Use
 
 ```html
-<script type="text/redline">Signed in {~~1658~>1648~~}{>>fact: It was 1648.<<}.</script>
+<div id="redline"></div>
 <script src="https://cdn.jsdelivr.net/gh/Etiee/redline@1/redline.min.js"></script>
+<script>Redline.render('#redline', String.raw`Signed in {~~1658~>1648~~}{>>fact: It was 1648.<<}.`)</script>
 ```
 
 The Claude skill is in [`skill/redline/SKILL.md`](skill/redline/SKILL.md). Open `demo.html` to see every edit type.

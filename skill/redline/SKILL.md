@@ -24,9 +24,12 @@ Keep the writer's voice and style. Make the smallest edit that fixes a real prob
 **Step 2: draw the card.** Your first output must be the tool call itself, not a written review. If the tool asks for a `read_me` call first, make it once with `modules: ["interactive"]`. Then call `show_widget` with `title: "redline_review"`, `loading_messages: ["Marking up your text"]`, and this `widget_code`, adding nothing else:
 
 ```html
-<script type="text/redline">MARKED TEXT</script>
-<script src="https://cdn.jsdelivr.net/gh/Etiee/redline@1/redline.min.js" onerror="var s=document.querySelector('script[type$=redline]'),p=document.createElement('pre');p.style.whiteSpace='pre-wrap';p.textContent=s.textContent;s.after(p)"></script>
+<div id="redline" style="min-height:120px"></div>
+<script src="https://cdn.jsdelivr.net/gh/Etiee/redline@1/redline.min.js"></script>
+<script>var t=String.raw`MARKED TEXT`;window.Redline?Redline.render('#redline',t):document.getElementById('redline').innerText=t</script>
 ```
+
+Keep these three parts in this order. Don't use any other kind of `<script>` tag, and put the marked text only inside the backticks.
 
 **Step 3: after the call returns,** write at most two short sentences: the most important issue, plus anything you couldn't verify. Don't list the changes again. Never say the card is shown unless the tool call actually ran and returned without an error.
 
@@ -69,7 +72,7 @@ Rules:
 - Punctuation gets its own mark: `that{--,--} each`, `{~~,~>;~~}`. The card colours it separately.
 - For a rewrite of more than about eight words, replace the whole clause in one `{~~old~>new~~}`.
 - Gaps: draft the missing text in the writer's voice as `{++…++}{>>gap: …<<}`. If only the writer can supply it (a source, data, a personal detail), use a note.
-- Write `</script` as `<\/script`.
+- Inside the backticks, write a backtick as `` \` ``, `${` as `\${`, and `</script` as `<\/script`. Leave everything else as is.
 - If nothing needs changing, render the text with no marks and say so.
 
 Example:
