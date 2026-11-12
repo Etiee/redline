@@ -1,9 +1,9 @@
-/*! redline v1.0.1 | track-changes card for Claude chat | MIT */
+/*! redline v1.1.0 | track-changes card for Claude chat | MIT */
 (function () {
   'use strict';
   if (window.Redline && window.Redline.version) { window.Redline.auto(); return; }
 
-  var VERSION = '1.0.1';
+  var VERSION = '1.1.0';
   var ORDER = ['sub', 'add', 'del', 'punct', 'move', 'note'];
   var KIND = { sub: 'Changed', add: 'Added', del: 'Removed', punct: 'Punctuation', move: 'Moved', note: 'Note' };
   var TAGS = {
@@ -41,7 +41,7 @@
 
   /* ---------- parse ---------- */
   function parse(src) {
-    src = String(src || '').replace(/<\\\//g, '</').replace(/\r\n?/g, '\n').replace(/^[ \t]*\n+|\n+[ \t]*$/g, '');
+    src = String(src || '').replace(/<\\\//g, '</').replace(/\\`/g, '`').replace(/\\\$\{/g, '${').replace(/\r\n?/g, '\n').replace(/^[ \t]*\n+|\n+[ \t]*$/g, '');
     var segs = [], changes = [], moves = {}, pos = 0, m;
     function push(c, op) {
       if (c.i == null) { c.i = changes.length; changes.push(c); }
@@ -302,7 +302,18 @@
 
   /* ---------- mount ---------- */
   function mount(root, src, opts) {
+    try { return mountUnsafe(root, src, opts); } catch (err) {
+      root.innerHTML = '';
+      var pre = document.createElement('pre');
+      pre.style.cssText = 'white-space:pre-wrap;font:14px/1.6 var(--font-mono,monospace);margin:0';
+      pre.textContent = 'The review card hit an error (' + err.message + '). Marked text:\n\n' + src;
+      root.appendChild(pre);
+    }
+  }
+
+  function mountUnsafe(root, src, opts) {
     opts = opts || {};
+    root.style.minHeight = '';
     injectCSS();
     var d = parse(src);
     var n = d.changes.length;
