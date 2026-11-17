@@ -2,14 +2,16 @@
 
 A track-changes card for writing reviews, drawn inline in Claude chat (claude.ai and Claude Code).
 
-Claude writes your text once with the changes marked inline (CriticMarkup plus a move syntax). This script turns that into an interactive card:
+You tell Claude what to change (or just "redline" for error fixes only). Claude writes your text once with the changes marked inline (CriticMarkup plus a move syntax), and this script turns that into an interactive card:
 
-- **Tracked**: the whole text, with every change highlighted in place
-- **Redline**: Word-style strikethrough and underline, with change bars
+- **Tracked**: the whole text, Word-style strikethrough and underline in place
+- **Side by side**: before and after next to each other, paragraph by paragraph
 - **Changes**: one row per change, with a few words of context so you can find it
-- **Original** and **Final**: clean text, no markup
+- **Final**: clean text with a copy button
 
-Hover or tap any change to see why it's suggested.
+Colours follow what happens to the text: green is new, red is removed, blue is moved, amber is a comment.
+
+Hover or tap any change to see why. Tick changes as you apply them in your own document to track progress.
 
 ## Use
 
